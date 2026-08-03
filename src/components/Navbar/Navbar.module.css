@@ -1,0 +1,23 @@
+nav{
+    display: flex;
+    background-color: rgb(95, 95, 151);
+    justify-content: space-between;
+   align-items: center;
+   padding: 5px;
+}
+.infoIcon{
+   background-color: aliceblue;
+}
+.location{
+    font-size: 10px;
+}
+.icons{
+    display: flex;
+    gap:20px;
+}
+.SearchIcon{
+    background-color: rgb(29, 44, 58);
+}
+.icon{
+    background-color: rgb(29, 44, 58);
+}
