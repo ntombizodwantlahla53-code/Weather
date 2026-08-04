@@ -1,17 +1,56 @@
-import { useState } from 'react'
-import './App.css'
-import { Navbar } from './components/Navbar/Navbar'
+import { useEffect, useState } from 'react'
+import { SearchBar } from './components/SearchBar/SearchBar'
 import { WeatherCard } from './components/WeatherCard/WeatherCard'
+import { HourlyCard } from './components/HourlyCard/HourlyCard'
+import { WeeklyCard } from './components/WeeklyCard/WeeklyCard'   
+import { getWeatherData } from './api/weatherApi'
+import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [city, setCity] = useState("london");
+  const [weatherData, setWeatherData] = useState<any | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
+  useEffect(() => {
+    const fetchWeather = async () => {
+      setLoading(true);
+      setError("");
+      try {
+        const data = await getWeatherData(city);
+        const { mintemp_c, maxtemp_c } = data.current;
+
+        setWeatherData({
+          current: {...data.current, mintemp_c, maxtemp_c},
+          hourly: data.forecast.forecastday[0].hour,
+          weekly: data.forecast.forecastday.SLICE(1),
+          location: data.location,
+        });
+      } catch(e) {
+        setError(`Error: ${e instanceof Error ? e.message : String(e)}`);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchWeather();
+  }, [city]);
   return (
-    <>
-      <Navbar/>
-      <WeatherCard/>
-    </>
-  )
+    <div className={'App'}>
+      <div className="container">
+        <SearchBar onSearch={setCity} />
+        {loading && <p>Loading...</p>}
+        {error && <p>{error}</p>}
+        {weatherData && (
+          <>
+            <WeatherCard data={weatherData.current} location={weatherData.location} />
+            <HourlyCard data={weatherData.hourly} />
+            <WeeklyCard data={weatherData.weekly} />
+          </>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default App

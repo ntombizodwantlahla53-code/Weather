@@ -1,0 +1,47 @@
+import React from 'react'
+import { format } from 'date-fns'
+import styles from './WeeklyCard.module.css'
+
+interface DayData {
+  date: string
+  day: {
+    daily_chance_of_rain: string | number
+    condition: {
+      text: string
+      icon: string
+    }
+  }
+}
+
+interface WeeklyCardProps {
+  data: DayData[]
+}
+
+const WeeklyCard = ({ data }: WeeklyCardProps) => {
+  return (
+    <div className={styles['weekly-container']}>
+      {data.map((day, index) => (
+        <div className={styles['day-row']} key={index}>
+          <div className={styles['day-label']}>
+            {format(new Date(day.date), 'EEE')}
+          </div>
+          <div className={styles['day-rain']}>
+            {day.day.daily_chance_of_rain}%
+          </div>
+          <div className={styles['day-condition']}>
+            <img
+              src={day.day.condition.icon}
+              alt="icon"
+              className={styles['day-icon']}
+            />
+            <span className={styles['day-text']}>
+              {day.day.condition.text}
+            </span>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export default WeeklyCard;
