@@ -1,6 +1,6 @@
 import React from 'react'
-import { format } from 'date-fns'
 import styles from './WeeklyCard.module.css'
+import { format } from 'date-fns';
 
 interface DayData {
   date: string
@@ -17,13 +17,13 @@ interface WeeklyCardProps {
   data: DayData[]
 }
 
-const WeeklyCard = ({ data }: WeeklyCardProps) => {
+export const WeeklyCard = ({ data }: WeeklyCardProps) => {
   return (
     <div className={styles['weekly-container']}>
       {data.map((day, index) => (
         <div className={styles['day-row']} key={index}>
           <div className={styles['day-label']}>
-            {format(new Date(day.date), 'EEE')}
+            {format(new Date(), 'EEE')}
           </div>
           <div className={styles['day-rain']}>
             {day.day.daily_chance_of_rain}%

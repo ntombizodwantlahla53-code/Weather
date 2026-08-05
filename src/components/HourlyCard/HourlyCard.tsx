@@ -1,6 +1,7 @@
 import React from 'react'
 import { SiRainmeter } from "react-icons/si";
 import styles from './HourlyCard.module.css'
+import { format, parse } from 'date-fns';
 
 interface HourlyData {
   time: string;
