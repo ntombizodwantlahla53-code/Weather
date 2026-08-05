@@ -2,14 +2,12 @@ import { useEffect, useState } from 'react'
 import { SearchBar } from './components/SearchBar/SearchBar'
 import { WeatherCard } from './components/WeatherCard/WeatherCard'
 import { HourlyCard } from './components/HourlyCard/HourlyCard'
-import { WeeklyCard } from './components/WeeklyCard/WeeklyCard' 
-import { format } from 'date-fns'  
-
+import { WeeklyCard } from './components/WeeklyCard/WeeklyCard'   
 import './App.css'
 
 const getWeatherData = async (city: string) => {
   const response = await fetch(
-    `https://api.weatherapi.com/v1/forecast.json?key=API_KEY&q=${encodeURIComponent(
+    `https://api.weatherapi.com/v1/forecast.json?key=${import.meta.env.VITE_API_KEY}&q=${encodeURIComponent(
       city,
     )}&days=7&aqi=no&alerts=no`,
   );
@@ -38,7 +36,7 @@ function App() {
         setWeatherData({
           current: {...data.current, mintemp_c, maxtemp_c},
           hourly: data.forecast.forecastday[0].hour,
-          weekly: data.forecast.forecastday.slice(1),
+          weekly: data.forecast.forecastday,
           location: data.location,
         });
       } catch(e) {
