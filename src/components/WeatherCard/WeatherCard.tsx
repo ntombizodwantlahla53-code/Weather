@@ -28,13 +28,12 @@ interface WeatherCardProps {
     conditions: string
     icon: string
     feelslike?: number
-    windspeed?: number
-    humidity?: number
+    
   }
-  location: string
+  
 }
 
-export const WeatherCard: React.FC<WeatherCardProps> = ({ data, location }) => {
+export const WeatherCard: React.FC<WeatherCardProps> = ({ data}) => {
   const {
     temp,
     tempmax,
@@ -42,34 +41,32 @@ export const WeatherCard: React.FC<WeatherCardProps> = ({ data, location }) => {
     conditions,
     icon,
     feelslike,
-    windspeed,
-    humidity,
+    
   } = data
 
   return (
-    <div className="current-weather">
-      <div className="card left-card">
+    <div className={styles.currentWeather}>
+      <div className={styles.left}>
         <div>
-          <h2>{location}</h2>
-          <h1 className="temp">{Math.round(temp)}°</h1>
+          
+          <p>{format(new Date(), 'EEEE, MMMM d')}</p>
+          <h1 className="temp">{Math.round(temp)}°C</h1>
           <p>
-            ↑{Math.round(tempmax)}° / ↓{Math.round(tempmin)}°
+            High: {Math.round(tempmax)}° / Low: {Math.round(tempmin)}°
           </p>
           {feelslike && <p>Feels like {Math.round(feelslike)}°</p>}
-          <p>{format(new Date(), 'EEEE, h:mm a')}</p>
+          
         </div>
-        <div className="condition">
+        </div>
+        <div className={styles.right}>
           <img
             src={iconMap[icon]} 
-            alt={conditions} className={styles['condition-icon']}
+            alt={conditions} className={styles.icon}
           />
           <h2 className="condition-text">{conditions}</h2>
-        </div>
+        
       </div>
-      <div className="card right-card">
-        {windspeed && <p>Wind: {windspeed} km/h</p>}
-        {humidity && <p>Humidity: {humidity}%</p>}
-      </div>
+      
     </div>
   )
 }

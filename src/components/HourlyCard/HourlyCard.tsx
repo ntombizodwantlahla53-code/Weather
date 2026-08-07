@@ -36,20 +36,25 @@ interface HourlyCardProps {
 
 export const HourlyCard: React.FC<HourlyCardProps> = ({ data }) => {
   return (
-    <div className={styles['hourly-container']}>
+   
+    <div className={styles.cardd}>
+     <span className={styles.hourText} >Hourly Forecast</span>
+     <div className={styles.hourContainer}>
       {data.map((hour, index) => (
-        <div className={styles['hourly-card']} key={index}>
-          <div className={styles['hour-time']}>
+        <div className={styles.card} key={index}>
+          <div className={styles.hour}>
             {format(new Date(`1970-01-01T${hour.datetime}`), 'h a')}
           </div>
+          <div>
           <img
             src={iconMap[hour.icon]} 
-            alt={hour.conditions} className={styles['condition-icon']}
-          />
+            alt={hour.conditions} className={styles.icon}
+          /></div>
           <div className={styles['hour-temp']}>{Math.round(hour.temp)}°</div>
           <div className={styles['hour-rain']}><SiRainmeter /> {hour.precipprob}%</div>
         </div>
       ))}
+      </div>
     </div>
   )
 }

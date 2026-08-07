@@ -3,6 +3,7 @@ import { SearchBar } from './components/SearchBar/SearchBar'
 import { WeatherCard } from './components/WeatherCard/WeatherCard'
 import { HourlyCard } from './components/HourlyCard/HourlyCard'
 import { WeeklyCard } from './components/WeeklyCard/WeeklyCard'
+import { Navbar } from './components/Navbar/Navbar'
 import './App.css'
 
 const getWeatherData = async (city: string) => {
@@ -18,7 +19,7 @@ const getWeatherData = async (city: string) => {
 }
 
 function App() {
-  const [city, setCity] = useState("Pietermaritzburg")
+  const [city, setCity] = useState("Tsomo")
   const [weatherData, setWeatherData] = useState<any | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
@@ -39,6 +40,8 @@ function App() {
             tempmin: today.tempmin,
             conditions: today.conditions,
             icon: today.icon,
+            windspeed: today.windspeed, 
+            humidity: today.humidity,
           },
           hourly: today.hours,
           weekly: data.days,
@@ -57,14 +60,16 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        <SearchBar onSearch={setCity} />
+        <Navbar onSearch={setCity} location={weatherData.location}/>
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
         {weatherData && (
           <>
-            <WeatherCard data={weatherData.current} location={weatherData.location} />
+            <WeatherCard data={weatherData.current}  />
             <HourlyCard data={weatherData.hourly} />
-            <WeeklyCard data={weatherData.weekly} />
+            <WeeklyCard data={weatherData.weekly} 
+              currentWindspeed={weatherData.current.windspeed}
+              currentHumidity={weatherData.current.humidity} />
           </>
         )}
       </div>

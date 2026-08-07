@@ -1,9 +1,9 @@
 nav{
     display: flex;
-    background-color: rgb(95, 95, 151);
     justify-content: space-between;
    align-items: center;
-   padding: 5px;
+   padding: 15px;
+   color: white;
 }
 .infoIcon{
    background-color: aliceblue;

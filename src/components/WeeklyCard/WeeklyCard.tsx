@@ -32,31 +32,56 @@ interface DayData {
 
 interface WeeklyCardProps {
   data: DayData[]
+  currentWindspeed?: number 
+  currentHumidity?: number  
 }
 
-export const WeeklyCard: React.FC<WeeklyCardProps> = ({ data }) => {
+export const WeeklyCard: React.FC<WeeklyCardProps> = ({ 
+  data, 
+  currentWindspeed, 
+  currentHumidity 
+}) => {
   return (
-    <div className={styles['weekly-container']}>
+    <div className={styles.Container}>
+      <span className={styles.hourText} >Weekly Forecast</span>
+      <div className={styles.weeklyContainer}>
       {data.map((day, index) => (
-        <div className={styles['day-row']} key={index}>
-          <div className={styles['day-label']}>
-            {format(new Date(day.datetime), 'EEE')}
+        <div className={styles.day} key={index}>
+          <div className={styles.left}>
+            <div className={styles['day-label']}>
+              {format(new Date(day.datetime), 'EEE')}
+            </div>
+            
+            <div className={styles['day-rain']}>
+              {day.precipprob}%
+            </div>
+            <div className={styles['day-condition']}>
+              <img src={iconMap[day.icon]} alt={day.conditions} className={styles.icon} />
+              <span className={styles['day-text']}>{day.conditions}</span>
+            </div>
+            <div className={styles['day-temp']}>
+              {Math.round(day.tempmin)}° / {Math.round(day.tempmax)}°
+            </div>
           </div>
-          <div className={styles['day-temp']}>
-            {Math.round(day.tempmin)}° / {Math.round(day.tempmax)}°
-          </div>
-          <div className={styles['day-rain']}>
-            {day.precipprob}%
-          </div>
-          <div className={styles['day-condition']}>
-            <img
-              src={iconMap[day.icon]} 
-            alt={day.conditions} className={styles['condition-icon']}
-            />
-            <span className={styles['day-text']}>{day.conditions}</span>
+          
+          <div className={styles.right}>
+            {/* Wind box container */}
+            {index === 0 && currentWindspeed !== undefined && (
+              <div className={styles.Box}>
+                <p>Wind: {currentWindspeed} km/h</p>
+              </div>
+            )}
+            
+            {/* Humidity box container */}
+            {index === 0 && currentHumidity !== undefined && (
+              <div className={styles.HBox}>
+                <p>Humidity: {currentHumidity}%</p>
+              </div>
+            )}
           </div>
         </div>
       ))}
+    </div>
     </div>
   )
 }
