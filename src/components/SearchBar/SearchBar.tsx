@@ -1,29 +1,27 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import styles from './SearchBar.module.css'
 
-interface SearchBarProps {
-  onSearch: (city: string) => void;
+interface Props {
+  onSearch: (city: string) => void
 }
-export const SearchBar = ({ onSearch }: SearchBarProps) => {
-  const [city, setCity] = useState('');
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if(city){
-      onSearch(city);
-    setCity('');
+const SearchBar = ({ onSearch }: Props) => {
+  const [city, setCity] = useState('')
+  const search = (event: React.FormEvent) => {
+    event.preventDefault()
+
+    if (city.trim()) {
+      onSearch(city)
+      setCity('')
+    }
   }
-}
   return (
-    <form onSubmit={handleSubmit}>
-      <span className= 'search-icon'></span>
-      <input className='search-input'
-      type="text"
-      placeholder="Enter city name"
-      value={city}
-      onChange={(e) => setCity(e.target.value)}
-      />
-      </form>
-      
+    <form onSubmit={search}>
+      <input
+        className={styles.searchInput}
+        placeholder="Search city"
+        value={city}
+        onChange={(event) => setCity(event.target.value)}/>
+    </form>
   )
 }
 export default SearchBar
