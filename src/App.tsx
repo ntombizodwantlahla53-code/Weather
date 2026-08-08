@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import { SearchBar } from './components/SearchBar/SearchBar'
 import { WeatherCard } from './components/WeatherCard/WeatherCard'
 import { HourlyCard } from './components/HourlyCard/HourlyCard'
 import { WeeklyCard } from './components/WeeklyCard/WeeklyCard'
 import { Navbar } from './components/Navbar/Navbar'
 import './App.css'
+import Settings from './components/Pages/Settings'
 
 const getWeatherData = async (city: string) => {
   const response = await fetch(
@@ -23,6 +23,8 @@ function App() {
   const [weatherData, setWeatherData] = useState<any | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
+
+  const [showSettings, setShowSettings] = useState(false)
 
   useEffect(() => {
     const fetchWeather = async () => {
@@ -60,18 +62,28 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        <Navbar onSearch={setCity} location={weatherData.location}/>
+        <Navbar onSearch={setCity} location={weatherData?.location} 
+        onSettings={() => setShowSettings(true)}
+/>
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
-        {weatherData && (
-          <>
-            <WeatherCard data={weatherData.current}  />
-            <HourlyCard data={weatherData.hourly} />
-            <WeeklyCard data={weatherData.weekly} 
-              currentWindspeed={weatherData.current.windspeed}
-              currentHumidity={weatherData.current.humidity} />
-          </>
-        )}
+        {showSettings ? (
+  <Settings onClose={() => setShowSettings(false)} />
+) : (
+  weatherData && (
+    <>
+      <WeatherCard data={weatherData.current} />
+
+      <HourlyCard data={weatherData.hourly} />
+
+      <WeeklyCard
+        data={weatherData.weekly}
+        currentWindspeed={weatherData.current.windspeed}
+        currentHumidity={weatherData.current.humidity}
+      />
+    </>
+  )
+)}
       </div>
     </div>
   )

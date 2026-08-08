@@ -6,12 +6,14 @@ import { BsSearch } from "react-icons/bs";
 import style from './Navbar.module.css'
 import SearchBar from '../SearchBar/SearchBar';
 
+
 interface NavbarProps {
   onSearch: (query: string) => void;
   location: string
+  onSettings: () => void
 }
 
-export const Navbar = ({ onSearch, location }: NavbarProps) => {
+export const Navbar = ({ onSearch, location, onSettings }: NavbarProps) => {
   return (
     <nav>
         <div className={style.infoIcon}>
@@ -22,8 +24,12 @@ export const Navbar = ({ onSearch, location }: NavbarProps) => {
         <div className={style.icons} >
         <div className={style.SearchIcon}><SearchBar onSearch={onSearch}/>
         </div><BsSearch/>
-        <div className={style.icon}><CgMenuBoxed/> 
-        </div>
+        <div
+  className={style.icon}
+  onClick={onSettings}
+>
+  <CgMenuBoxed />
+</div>
        </div>
         
     </nav>
