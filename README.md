@@ -1,4 +1,5 @@
 # WEATHER-APP
+<img src="https://socialify.git.ci/ntombizodwantlahla53-code/Weather/image?language=1&owner=1&name=1&stargazers=1&theme=Light" alt="Weather" width="640" height="320" />
 
 # Project Description
 ```
