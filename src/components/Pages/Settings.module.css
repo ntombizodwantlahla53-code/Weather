@@ -1,71 +1,38 @@
-
-.settingsPage {
-  background: white;
-  width: 100%;
-  max-width: 500px;
-  margin: 20px auto;
-  padding: 25px;
-  border-radius: 15px;
-  box-sizing: border-box;
+.settingsBckgrnd{
+padding: 25px;
 }
-
-.header {
+.topic {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
-
-.header h2 {
-  margin: 0;
-}
-
-.header button {
-  border: none;
-  background: none;
-  font-size: 22px;
-  cursor: pointer;
-}
-
 .settingBox {
-  border: 1px solid #ddd;
+  border: solid white;
   border-radius: 12px;
   padding: 18px;
   margin-bottom: 15px;
 }
-
-.settingBox h3 {
-  margin-top: 0;
-  margin-bottom: 5px;
-}
-
-.settingBox p {
-  margin-top: 5px;
-  color: #666;
-}
-
 .settingButton {
   padding: 10px 18px;
-  border: none;
+  border: solid black;
   border-radius: 8px;
   cursor: pointer;
   background: #eee;
 }
-
+.settingButton:hover{
+    background-color: aqua;
+}
 .temperatureButtons {
   display: flex;
   gap: 10px;
 }
-
-.temperatureButtons button {
-  padding: 10px 25px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background: white;
-  cursor: pointer;
+.backBtn{
+    font-size: 23px;
 }
-
-.temperatureButtons .active {
-  background: black;
-  color: white;
+.Button{
+    background-color: white;
+}
+.Button:hover{
+    background-color: aqua;
 }
