@@ -1,48 +1,63 @@
-
-
-.weeklyContainer{
-    display: flex;
-    flex-direction: column;
-    overflow-y: scroll;
-    max-height: 400px;
-    position: relative;
+.container {
+  display: flex;
+  width: 95%;
+  max-height:500px;
+  overflow-x: scroll;
+}
+.WHeading{
     color: white;
+    font-size: 25px;
+    text-decoration: underline;
 }
-.day{
+.weeklyCard {
+  flex: 1;
+  border-radius: 15px;
+  margin: 15px;
+}
+.day {
+  display: flex;
+  background-color: rgba(255,255,255,0.08);
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 10px;
+  border: solid black;
+  border-radius: 24px;
+ margin-bottom: 10px;
+}
+.icon {
+  width: 40px;
+  height: 40px;
+}
+
+.temperature {
+  width: 90px;
+  text-align: right;
+}
+
+.rightCard {
+  border-radius: 15px;
+  padding: 10px;
+  margin-top: 90px;
+}
+
+.wind {
     display: flex;
-    padding: 15px;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+    border: solid black;
+    height: 150px;
+    width: 140px;
+    background-color: rgba(255,255,255,0.08);
+}
+.hum{
     display: flex;
-    align-items: start;
-    gap: 50px;
-}
-.left{
-    justify-content: space-between;
-    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
     border: solid black;
+    height: 150px;
+    width: 140px;
     background-color: rgba(255,255,255,0.08);
-   flex: 1;
-}
-.icon{
-    width: 50px;
-    height: 50px;
-}
-.right{
-    flex-direction: column;
-    padding: 15px;
-  
-}
-.HBox{
-    background-color: rgba(255,255,255,0.08);
-    border: solid black;
-    
-}
-.Box{
-    background-color: rgba(255,255,255,0.08);
-    border: solid black;
-   
-}
-.hourText{
-    color: white;
-    font-size: 30px;
-    padding: 15px;
 }
