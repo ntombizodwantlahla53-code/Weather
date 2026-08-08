@@ -1,92 +1,136 @@
 import { useEffect, useState } from 'react'
-import { WeatherCard } from './components/WeatherCard/WeatherCard'
-import { HourlyCard } from './components/HourlyCard/HourlyCard'
-import { WeeklyCard } from './components/WeeklyCard/WeeklyCard'
+import { Routes, Route } from 'react-router-dom'
 import { Navbar } from './components/Navbar/Navbar'
-import './App.css'
+import WeatherCard from './components/WeatherCard/WeatherCard'
+import HourlyCard from './components/HourlyCard/HourlyCard'
+import WeeklyCard from './components/WeeklyCard/WeeklyCard'
 import Settings from './components/Pages/Settings'
-
-const getWeatherData = async (city: string) => {
-  const response = await fetch(
-    `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?unitGroup=metric&key=${import.meta.env.VITE_API_KEY}&contentType=json`
-  )
-
-  if (!response.ok) {
-    throw new Error('Unable to fetch weather data')
-  }
-
-  return response.json()
-}
+import './App.css'
 
 function App() {
-  const [city, setCity] = useState("Tsomo")
-  const [weatherData, setWeatherData] = useState<any | null>(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState("")
+  const [weather, setWeather] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+  const [temperature, setTemperature] = useState<'C' | 'F'>(
+    localStorage.getItem('temperature') === 'F' ? 'F' : 'C'
+  )
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem('darkMode') === 'true'
+  )
+  const [notifications, setNotifications] = useState(
+    localStorage.getItem('notifications') !== 'false'
+  )
+  const [savedLocations, setSavedLocations] = useState<string[]>(
+    JSON.parse(localStorage.getItem('savedLocations') || '[]')
+  )
+  const getWeather = async (location: string) => {
+    setLoading(true)
+    setError('')
 
-  const [showSettings, setShowSettings] = useState(false)
+    try {
+      const response = await fetch(
+        `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=metric&key=${import.meta.env.VITE_API_KEY}&contentType=json`
+      )
+      if (!response.ok) {
+        throw new Error('Location is not found, try again')
+      }
+      const data = await response.json()
+      setWeather(data)
+    } catch {
+      setError('Unable to get weather')
+    }
+    setLoading(false)
+  }
 
+  const saveLocation = (city: string) => {
+    if (!savedLocations.includes(city)) {
+      const newLocations = [...savedLocations, city]
+      setSavedLocations(newLocations)
+
+      localStorage.setItem(
+        'savedLocations',
+        JSON.stringify(newLocations)
+      )
+    }
+  }
+  const clearLocations = () => {
+    setSavedLocations([])
+    localStorage.removeItem('savedLocations')
+  }
   useEffect(() => {
-    const fetchWeather = async () => {
-      setLoading(true)
-      setError("")
-      try {
-        const data = await getWeatherData(city)
-
-        const today = data.days[0]
-
-        setWeatherData({
-          current: {
-            temp: today.temp,
-            tempmax: today.tempmax,
-            tempmin: today.tempmin,
-            conditions: today.conditions,
-            icon: today.icon,
-            windspeed: today.windspeed, 
-            humidity: today.humidity,
-          },
-          hourly: today.hours,
-          weekly: data.days,
-          location: data.resolvedAddress,
-        })
-      } catch (e) {
-        setError(`Error: ${e instanceof Error ? e.message : String(e)}`)
-      } finally {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const location =
+          `${position.coords.latitude},${position.coords.longitude}`
+        getWeather(location)
+      },
+      () => {
+        setError('Please allow location /or search for a city')
         setLoading(false)
       }
-    }
+    )
+  }, [])
+  useEffect(() => {
+    document.body.classList.toggle('dark-mode', darkMode)
+  }, [darkMode])
+  const changeTemperature = (unit: 'C' | 'F') => {
+    setTemperature(unit)
+    localStorage.setItem('temperature', unit)
+  }
 
-    fetchWeather()
-  }, [city])
-
+  const changeTheme = () => {
+    const value = !darkMode
+    setDarkMode(value)
+    localStorage.setItem('darkMode', String(value))
+  }
+  const changeNotifications = () => {
+    const value = !notifications
+    setNotifications(value)
+    localStorage.setItem('notifications', String(value))
+  }
   return (
     <div className="App">
       <div className="container">
-        <Navbar onSearch={setCity} location={weatherData?.location} 
-        onSettings={() => setShowSettings(true)}
-/>
-        {loading && <p>Loading...</p>}
-        {error && <p>{error}</p>}
-        {showSettings ? (
-  <Settings onClose={() => setShowSettings(false)} />
-) : (
-  weatherData && (
-    <>
-      <WeatherCard data={weatherData.current} />
 
-      <HourlyCard data={weatherData.hourly} />
-
-      <WeeklyCard
-        data={weatherData.weekly}
-        currentWindspeed={weatherData.current.windspeed}
-        currentHumidity={weatherData.current.humidity}
-      />
-    </>
-  )
-)}
+        <Navbar location={weather?.resolvedAddress || 'Loading...'}
+          onSearch={(city) => {
+            getWeather(city)
+            saveLocation(city)
+          }}/>
+        <Routes>
+          <Route path="/" element={
+              <>
+                {loading && <p>Loading weather...</p>}
+                {error && <p>{error}</p>}
+                {weather && (
+                  <>
+                    <WeatherCard data={weather.days[0]}
+                      current={weather.currentConditions}
+                      temperature={temperature}
+                    />
+                    <HourlyCard data={weather.days[0].hours}
+                      temperature={temperature}
+                    />
+                    <WeeklyCard data={weather.days}
+                      temperature={temperature}
+                      wind={weather.currentConditions?.windspeed}
+                      humidity={weather.currentConditions?.humidity}/></>
+                )}</>
+            }/>
+          <Route path="/settings" element={
+              <Settings
+                temperature={temperature}
+                darkMode={darkMode}
+                notifications={notifications}
+                savedLocations={savedLocations}
+                onTemperatureChange={changeTemperature}
+                onThemeChange={changeTheme}
+                onNotificationsChange={changeNotifications}
+                onClearLocations={clearLocations}/>}
+          />
+        </Routes>
       </div>
     </div>
   )
 }
-
 export default App
