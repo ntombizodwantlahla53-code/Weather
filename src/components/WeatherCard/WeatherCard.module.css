@@ -1,5 +1,5 @@
 .currentWeather {
-  background-color:rgba(255,255,255,0.08);
+  background-color:#1E2A3A;
   height: 50%;
   display: flex;
   margin: 15px;
@@ -8,7 +8,7 @@ align-items: center;
 justify-content: center;
 position: relative;
 color: white;
-border: solid black;
+border: 1px solid white;
 border-radius: 24px;
 margin-bottom: 50px;
 }
@@ -17,7 +17,7 @@ margin-bottom: 50px;
   flex-direction: column;
   height: 90%;
   width:45%; 
-  
+
 }
 .right {
   display: flex;
@@ -26,11 +26,33 @@ margin-bottom: 50px;
   width:50%;
   align-items: center;
   justify-content: center;
-  
+
 
 }
 .icon{
     width: 180px;
     width: 180px;
+}
+.feeling{
+  color:#B0BEC5;
+  font-size: 20px;
+   margin: 0;
+  padding: 0
+}
+.degrees{
+  color:#B0BEC5;
+  font-size: 20px;
+   margin: 0;
+  padding: 0
+}
+.space{
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+}
+.tempp{
+  margin: 0;
+  padding: 0;
+  font-size: 60px;
 }
 
