@@ -91,7 +91,6 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-
         <Navbar location={weather?.resolvedAddress || 'Loading...'}
           onSearch={(city) => {
             getWeather(city)
@@ -106,15 +105,17 @@ function App() {
                   <>
                     <WeatherCard data={weather.days[0]}
                       current={weather.currentConditions}
-                      temperature={temperature}
-                    />
+                      temperature={temperature}/>
                     <HourlyCard data={weather.days[0].hours}
-                      temperature={temperature}
-                    />
+                      temperature={temperature} />
                     <WeeklyCard data={weather.days}
                       temperature={temperature}
                       wind={weather.currentConditions?.windspeed}
-                      humidity={weather.currentConditions?.humidity}/></>
+                      windDir={weather.currentConditions?.winddir}
+                      humidity={weather.currentConditions?.humidity}
+                      uv={weather.currentConditions?.uvindex}
+                      pressure={weather.currentConditions?.pressure}/>
+                      </>
                 )}</>
             }/>
           <Route path="/settings" element={
