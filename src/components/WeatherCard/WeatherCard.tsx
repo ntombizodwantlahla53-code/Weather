@@ -25,10 +25,6 @@ const WeatherCard: React.FC<Props> = ({
           {Math.round(convert(current.temp))}
           °{temperature}
         </h1>
-        <p>High: {Math.round(convert(data.tempmax))}°
-          {'/ '}
-          Low: {Math.round(convert(data.tempmin))}°
-        </p>
         <p>Feels like:{' '}
           {Math.round(convert(current.feelslike))}°
         </p>
@@ -36,7 +32,11 @@ const WeatherCard: React.FC<Props> = ({
 
       <div className={styles.right}>
         <WeatherIcon icon={current.icon} />
-        <h2>{current.conditions}</h2>
+        <p>High: {Math.round(convert(data.tempmax))}°
+          {'/ '}
+          Low: {Math.round(convert(data.tempmin))}°
+        
+        <h2>{current.conditions}</h2></p>
       </div>
     </div>
   )
