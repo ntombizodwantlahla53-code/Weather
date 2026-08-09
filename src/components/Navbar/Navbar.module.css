@@ -5,9 +5,6 @@ nav{
    padding: 15px;
    color: white;
 }
-.infoIcon{
-   background-color: aliceblue;
-}
 .location{
     font-size: 10px;
 }
@@ -19,5 +16,9 @@ nav{
     background-color: rgb(29, 44, 58);
 }
 .icon{
-    background-color: rgb(29, 44, 58);
+    font-size: 40px;
+}
+.infoIcon{
+    font-size: 40px;
+
 }

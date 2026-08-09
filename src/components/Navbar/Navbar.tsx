@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { RxInfoCircled } from 'react-icons/rx'
+import { SiTheweatherchannel } from "react-icons/si";
 import { CgMenuBoxed } from 'react-icons/cg'
 import SearchBar from '../SearchBar/SearchBar'
 import styles from './Navbar.module.css'
@@ -17,7 +17,7 @@ export const Navbar: React.FC<Props> = ({
   const navigate = useNavigate()
   return (
     <nav>
-      <RxInfoCircled className={styles.infoIcon} />
+      <SiTheweatherchannel className={styles.infoIcon} />
       <div className={styles.location}>
         <h2>{location}</h2>
       </div>
