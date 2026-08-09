@@ -20,23 +20,24 @@ const WeatherCard: React.FC<Props> = ({
   return (
     <div className={styles.currentWeather}>
       <div className={styles.left}>
-        <p>{format(new Date(), 'EEEE, MMMM d')}</p>
-        <h1>
+        <p className={styles.space}>{format(new Date(), 'EEEE, MMM d')}</p>
+        <h1 className={styles.tempp}>
           {Math.round(convert(current.temp))}
           °{temperature}
         </h1>
-        <p>Feels like:{' '}
+        <p className={styles.feeling}>Feels like:{' '}
           {Math.round(convert(current.feelslike))}°
         </p>
       </div>
 
       <div className={styles.right}>
         <WeatherIcon icon={current.icon} />
-        <p>High: {Math.round(convert(data.tempmax))}°
+        <h2 className={styles.space}>{current.conditions}</h2>
+        <p className={styles.degrees}>High: {Math.round(convert(data.tempmax))}°
           {'/ '}
           Low: {Math.round(convert(data.tempmin))}°
         
-        <h2>{current.conditions}</h2></p>
+        </p>
       </div>
     </div>
   )
