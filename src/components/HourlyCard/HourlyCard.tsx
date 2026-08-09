@@ -31,7 +31,7 @@ const HourlyCard: React.FC<Props> = ({ data, temperature }) => {
               <div className={styles['hour-temp']}>
                 {Math.round(convert(hour.temp))}°{temperature}
               </div>
-              <div>
+              <div className={styles.percent}>
                 {hour.precipprob}%
               </div>
             </div>
