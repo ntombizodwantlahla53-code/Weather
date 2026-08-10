@@ -34,10 +34,7 @@ const WeeklyCard: React.FC<Props> = ({
   const windDirection = getWindDirection(windDir)
   return (
     <div className={styles.container}>
-      <div className={styles.left}>
-        <h3 className={styles.WHeading}>Weekly Forecast</h3>
       <div className={styles.weeklyCard}>
-        
         {data.map((day, index) => (
           <div className={styles.day} key={index}>
             <div className={styles.dayName}>
@@ -57,7 +54,7 @@ const WeeklyCard: React.FC<Props> = ({
           </div>
         ))}
       </div>
-</div>
+
       <div className={styles.rightCard}>
         <div className={styles.right}>
           <div className={styles.spaces}>
