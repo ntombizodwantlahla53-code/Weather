@@ -11,6 +11,7 @@ function App() {
   const [weather, setWeather] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [currentLocation, setCurrentLocation] = useState('Loading...')
   const [temperature, setTemperature] = useState<'C' | 'F'>(
     localStorage.getItem('temperature') === 'F' ? 'F' : 'C'
   )
@@ -23,7 +24,11 @@ function App() {
   const [savedLocations, setSavedLocations] = useState<string[]>(
     JSON.parse(localStorage.getItem('savedLocations') || '[]')
   )
-  const getWeather = async (location: string) => {
+
+  const getWeather = async (
+    location: string,
+    isCurrentLocation = false
+  ) => {
     setLoading(true)
     setError('')
 
@@ -36,6 +41,10 @@ function App() {
       }
       const data = await response.json()
       setWeather(data)
+
+      if (!isCurrentLocation) {
+        setCurrentLocation(data.resolvedAddress)
+      }
     } catch {
       setError('Unable to get weather')
     }
@@ -59,10 +68,43 @@ function App() {
   }
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const location =
-          `${position.coords.latitude},${position.coords.longitude}`
-        getWeather(location)
+      async (position) => {
+        const latitude = position.coords.latitude
+        const longitude = position.coords.longitude
+
+        getWeather(
+          `${latitude},${longitude}`,
+          true
+        )
+        try {
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+          )
+          const data = await response.json()
+          const village =
+            data.address.village ||
+            data.address.hamlet ||
+            data.address.suburb ||
+            data.address.neighbourhood ||
+            data.address.quarter ||
+            ''
+          const city =
+            data.address.city ||
+            data.address.town ||
+            ''
+          const locationName = [village, city]
+            .filter(Boolean)
+            .filter(
+              (value, index, array) =>
+                array.indexOf(value) === index
+            )
+            .join(', ')
+          setCurrentLocation(
+            locationName || 'Current Location'
+          )
+        } catch {
+          setCurrentLocation('Current Location')
+        }
       },
       () => {
         setError('Please allow location /or search for a city')
@@ -77,9 +119,7 @@ function App() {
     setTemperature(unit)
     localStorage.setItem('temperature', unit)
   }
-
-  const changeTheme = () => {
-    const value = !darkMode
+  const changeTheme = (value: boolean) => {
     setDarkMode(value)
     localStorage.setItem('darkMode', String(value))
   }
@@ -91,11 +131,13 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        <Navbar location={weather?.resolvedAddress || 'Loading...'}
+        <Navbar
+          location={currentLocation}
           onSearch={(city) => {
             getWeather(city)
             saveLocation(city)
-          }}/>
+          }}
+        />
         <Routes>
           <Route path="/" element={
               <>
@@ -107,7 +149,7 @@ function App() {
                       current={weather.currentConditions}
                       temperature={temperature}/>
                     <HourlyCard data={weather.days[0].hours}
-                      temperature={temperature} />
+                      temperature={temperature}/>
                     <WeeklyCard data={weather.days}
                       temperature={temperature}
                       wind={weather.currentConditions?.windspeed}
@@ -115,11 +157,11 @@ function App() {
                       humidity={weather.currentConditions?.humidity}
                       uv={weather.currentConditions?.uvindex}
                       pressure={weather.currentConditions?.pressure}/>
-                      </>
+                  </>
                 )}</>
             }/>
           <Route path="/settings" element={
-              <Settings
+               <Settings
                 temperature={temperature}
                 darkMode={darkMode}
                 notifications={notifications}
@@ -128,7 +170,7 @@ function App() {
                 onThemeChange={changeTheme}
                 onNotificationsChange={changeNotifications}
                 onClearLocations={clearLocations}/>}
-          />
+                />
         </Routes>
       </div>
     </div>
