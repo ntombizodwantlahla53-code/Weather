@@ -35,9 +35,11 @@ const HourlyCard: React.FC<Props> = ({ data, temperature }) => {
                 {hour.precipprob}%
               </div>
             </div>
+
           )
         })}
       </div>
+      <h3 className={styles.WHeading}>Weekly Forecast</h3>
     </div>
   )
 }

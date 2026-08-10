@@ -4,17 +4,20 @@
     gap: 40px;
     color:white;
     margin:15px;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
+    
 
 }
 .hourContainer::-webkit-scrollbar{
-    width: 5px;
+    width: 20px;
 }
 .heading{
     color: white;
     font-size: 25px;
     margin: 15px;
+    margin-bottom: 25px;
 }
+
 .card{
     background-color: #1E2A3A;
     border: 1px solid white;
@@ -24,6 +27,12 @@
     padding-top: 30px;
    text-align: center;
    border-radius: 24px;
+}
+.WHeading{
+    color: white;
+    font-size: 25px;
+    margin: 15px;
+
 }
 .time{
     color:#B0BEC5;
