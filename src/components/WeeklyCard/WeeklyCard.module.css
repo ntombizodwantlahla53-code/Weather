@@ -1,15 +1,15 @@
 .container {
   display: flex;
   flex-wrap: wrap;
-  font-size: 20px;
+  font-size: 19px;
   justify-content: space-between;
   margin:15px;
   
 }
 .weeklyCard {
-  width: 85%;
+  width: 87%;
   position: sticky;
-  max-height:570px;
+  max-height:590px;
   overflow-y: scroll;
   overflow-x: hidden;
   margin-top: 20PX; 
@@ -36,20 +36,20 @@ flex: 1;
 }
 .rightCard {
   border-radius: 15px;
-  padding: 10px;
+ 
 }
 .right {
-    display: flex;
     align-items: center;
     margin-bottom: 5px;
     border: 1px solid white;
-    height: 130px;
+    height: 140px;
     width: 130px;
     background-color: #1E2A3A;
     border-radius: 24px;
     justify-content: center;
     padding: 5px;
-    flex-direction: column;
+    text-align: center;
+    
 }
 .rain{
   color:#B0BEC5;
@@ -71,6 +71,22 @@ flex: 1;
 @media(width<=465px) and (width>= 319px) {
 .container{
   font-size: 12px;
+  grid-template-columns: 1fr 1fr;
 }
+.rightCard{
+  margin-top: 20px;
+display: grid;
+gap: 12px;
+  
+  grid-template-columns: 1fr 1fr;
+}
+.right{
+  width: 120px;
+  height: 130px;
+}
+.weeklyCard{
+  width: 95%;
+}
+
 }
 
