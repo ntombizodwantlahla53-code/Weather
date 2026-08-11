@@ -11,12 +11,22 @@ const HourlyCard: React.FC<Props> = ({ data, temperature }) => {
     temperature === 'F'
       ? (temp * 9) /5+32
       : temp
-
+  const now = new Date()
+  const currentHour = now.getHours()
+  const startIndex = data.findIndex(hour => {
+    const hourNum = Number(hour.datetime.split(':')[0])
+    return hourNum === currentHour
+  })
+  const hoursToShow: any[] = []
+  for(let i = 0; i < 24; i++) {
+    const index = (startIndex + i) % data.length
+    hoursToShow.push(data[index])
+  }
   return (
     <div className={styles.container}>
       <h2 className={styles.heading}>Hourly Forecast</h2>
       <div className={styles.hourContainer}>
-        {data.map((hour, index) => {
+           {hoursToShow.map((hour, index) => {
           const number = Number(hour.datetime.split(':')[0])
           const hour12 = number % 12 || 12
           const ampm = number < 12?'AM':'PM'
