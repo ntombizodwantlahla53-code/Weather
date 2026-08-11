@@ -55,7 +55,7 @@ margin-bottom: 50px;
   padding: 0;
   font-size: 60px;
 }
-@media(width<=465px) and (width>= 319px) {
+@media(width<=512px) and (width>= 319px) {
 .feeling{
   color:#B0BEC5;
   font-size: 12px;

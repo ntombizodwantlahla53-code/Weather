@@ -1,6 +1,5 @@
 .container {
   display: flex;
-  flex-wrap: wrap;
   font-size: 19px;
   justify-content: space-between;
   margin:15px;
@@ -24,7 +23,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 15px;
-  padding: 5px;
+  padding: 10px;
   border:1px solid white;
   border-radius: 24px;
  margin-bottom: 10px;
@@ -68,8 +67,9 @@ flex: 1;
   margin: 0;
   padding: 0;
 }
-@media(width<=465px) and (width>= 319px) {
+@media(width<=511px) and (width>= 319px) {
 .container{
+  flex-wrap: wrap;
   font-size: 12px;
   grid-template-columns: 1fr 1fr;
 }
@@ -89,4 +89,8 @@ gap: 12px;
 }
 
 }
-
+@media(width>=500px){
+  .container{
+    gap: 10px;
+  }
+}
