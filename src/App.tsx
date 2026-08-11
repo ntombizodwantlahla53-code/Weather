@@ -11,7 +11,7 @@ function App() {
   const [weather, setWeather] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
-  const [currentLocation, setCurrentLocation] = useState('Loading...')
+  const [currentLocation, setCurrentLocation] = useState('Loading...please wait')
   const [temperature, setTemperature] = useState<'C' | 'F'>(
     localStorage.getItem('temperature') === 'F' ? 'F' : 'C'
   )
