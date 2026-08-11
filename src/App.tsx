@@ -107,7 +107,7 @@ function App() {
         }
       },
       () => {
-        setError('Please allow location /or search for a city')
+        setError('Please allow location /search ')
         setLoading(false)
       }
     )
