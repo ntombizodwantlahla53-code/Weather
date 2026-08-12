@@ -44,7 +44,7 @@ function App() {
         setLoading(false)
         return
       } else {
-        throw new Error('No cached data available for this location')
+        throw new Error('No cached data available for this location, try another location')
       }
     }
       const response = await fetch(
@@ -127,7 +127,7 @@ function App() {
       },
       () => {
 
-        setError('Please allow location /search ')
+        setError('Please allow location /Search ')
       
         setLoading(false)
       }
