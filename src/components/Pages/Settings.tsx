@@ -1,7 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './Settings.module.css'
-
 import { IoNotificationsOffOutline } from 'react-icons/io5'
 import { IoIosNotificationsOutline } from 'react-icons/io'
 import { TbLocationCheck } from 'react-icons/tb'
@@ -89,7 +88,7 @@ const Settings: React.FC<Props> = ({
         {savedLocations.length > 0 ? (
           <>
             {savedLocations.map((location) => (
-              <div key={location} onClick={() => { onSelectLocation(location); navigate('/'); }}>
+              <div className={styles.MysavedLocations} key={location} onClick={() => { onSelectLocation(location); navigate('/'); }}>
                 <TbLocationCheck /> {location}
               </div>
             ))}
