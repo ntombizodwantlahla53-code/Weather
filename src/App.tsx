@@ -107,7 +107,9 @@ function App() {
         }
       },
       () => {
+
         setError('Please allow location /search ')
+      
         setLoading(false)
       }
     )
@@ -169,7 +171,9 @@ function App() {
                 onTemperatureChange={changeTemperature}
                 onThemeChange={changeTheme}
                 onNotificationsChange={changeNotifications}
-                onClearLocations={clearLocations}/>}
+                onClearLocations={clearLocations}
+                onSelectLocation={(city) => getWeather(city)}
+              />}
                 />
         </Routes>
       </div>
