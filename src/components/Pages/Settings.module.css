@@ -42,3 +42,18 @@ padding: 25px;
 .Button:hover{
     background-color: aqua;
 }
+.MysavedLocations{
+  border: 1px solid white;
+  border-radius: 12px;
+  background-color:#1E2A3A ;
+  margin-bottom: 20px;
+}
+.MysavedLocations:hover{
+  background-color:darkcyan;
+  font-size: 20px
+}
+:global(body.dark-mode) .MysavedLocations {
+  background-color: #121212;
+  color: white;
+  border: solid white;
+}
