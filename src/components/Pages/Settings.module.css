@@ -14,6 +14,10 @@ padding: 25px;
   margin-bottom: 15px;
   background-color:#1E2A3A ;
 }
+:global(body.dark-mode) .settingBox {
+  background-color: #121212;
+  color: white;
+}
 .settingButton {
   
   border: 1px solid black;
