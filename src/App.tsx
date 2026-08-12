@@ -52,7 +52,10 @@ function App() {
   }
 
   const saveLocation = (city: string) => {
-    if (!savedLocations.includes(city)) {
+    const cityLower = city.trim().toLowerCase()
+    const exists = savedLocations.some((location) => location.toLowerCase() === cityLower
+    )
+    if (!exists) {
       const newLocations = [...savedLocations, city]
       setSavedLocations(newLocations)
 
