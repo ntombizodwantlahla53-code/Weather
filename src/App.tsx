@@ -34,7 +34,6 @@ function App() {
 
     try {
       if (!navigator.onLine) {
-      // Offline mode: load cached weather
       const cachedData = localStorage.getItem(`weather_${location}`)
       if (cachedData) {
         const data = JSON.parse(cachedData)
