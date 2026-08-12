@@ -33,6 +33,21 @@ function App() {
     setError('')
 
     try {
+      if (!navigator.onLine) {
+      // Offline mode: load cached weather
+      const cachedData = localStorage.getItem(`weather_${location}`)
+      if (cachedData) {
+        const data = JSON.parse(cachedData)
+        setWeather(data)
+        if (!isCurrentLocation) {
+          setCurrentLocation(data.resolvedAddress || location)
+        }
+        setLoading(false)
+        return
+      } else {
+        throw new Error('No cached data available for this location')
+      }
+    }
       const response = await fetch(
         `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=metric&key=${import.meta.env.VITE_API_KEY}&contentType=json`
       )
@@ -42,11 +57,13 @@ function App() {
       const data = await response.json()
       setWeather(data)
 
+      localStorage.setItem(`weather_${location}`, JSON.stringify(data))
+
       if (!isCurrentLocation) {
         setCurrentLocation(data.resolvedAddress)
       }
-    } catch {
-      setError('Unable to get weather')
+    } catch (error: any){
+      setError(error.message || 'Unable to get weather')
     }
     setLoading(false)
   }
