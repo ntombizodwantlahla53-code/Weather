@@ -12,6 +12,10 @@ border: 1px solid white;
 border-radius: 24px;
 margin-bottom: 50px;
 }
+:global(body.dark-mode) .currentWeather {
+  background-color: #121212;
+  color: white;
+}
 .left{
   display: flex;
   flex-direction: column;
