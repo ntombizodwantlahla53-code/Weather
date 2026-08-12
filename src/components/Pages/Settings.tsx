@@ -18,6 +18,7 @@ interface Props {
   onThemeChange: (value: boolean) => void
   onNotificationsChange: () => void
   onClearLocations: () => void
+  onSelectLocation: (location: string) => void
 }
 
 const Settings: React.FC<Props> = ({
@@ -28,7 +29,8 @@ const Settings: React.FC<Props> = ({
   onTemperatureChange,
   onThemeChange,
   onNotificationsChange,
-  onClearLocations
+  onClearLocations,
+  onSelectLocation
 }) => {
   const navigate = useNavigate()
 
@@ -87,7 +89,7 @@ const Settings: React.FC<Props> = ({
         {savedLocations.length > 0 ? (
           <>
             {savedLocations.map((location) => (
-              <div key={location}>
+              <div key={location} onClick={() => { onSelectLocation(location); navigate('/'); }}>
                 <TbLocationCheck /> {location}
               </div>
             ))}
