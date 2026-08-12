@@ -28,6 +28,10 @@
    text-align: center;
    border-radius: 24px;
 }
+:global(body.dark-mode) .card {
+  background-color: #121212;
+  color: white;
+}
 .WHeading{
     color: white;
     font-size: 25px;
