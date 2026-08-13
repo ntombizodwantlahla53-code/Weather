@@ -1,12 +1,14 @@
 import React from 'react'
 import WeatherIcon from '../WeatherIcon/WeatherIcon'
 import styles from './HourlyCard.module.css'
+import { PiWindBold } from "react-icons/pi";
 
 interface Props {
   data: any[]
   temperature: 'C' | 'F'
+  wind?: number
 }
-const HourlyCard: React.FC<Props> = ({ data, temperature }) => {
+const HourlyCard: React.FC<Props> = ({ data, temperature, wind }) => {
   const convert = (temp: number) =>
     temperature === 'F'
       ? (temp * 9) /5+32
@@ -44,6 +46,11 @@ const HourlyCard: React.FC<Props> = ({ data, temperature }) => {
               <div className={styles.percent}>
                 {hour.precipprob}%
               </div>
+              <div className={styles.right}>
+          <div className={styles.spaces}>
+            <p className={styles.windy}><PiWindBold/>{wind !== undefined ? `${Math.round(wind)} km/h` : ''}</p>
+          </div>
+        </div>
             </div>
 
           )
