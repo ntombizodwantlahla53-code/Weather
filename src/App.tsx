@@ -170,7 +170,8 @@ function App() {
                       current={weather.currentConditions}
                       temperature={temperature}/>
                     <HourlyCard data={weather.days[0].hours}
-                      temperature={temperature}/>
+                      temperature={temperature}
+                      wind={weather.currentConditions?.windspeed}/>
                     <WeeklyCard data={weather.days}
                       temperature={temperature}
                       wind={weather.currentConditions?.windspeed}
