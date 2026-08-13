@@ -44,6 +44,9 @@
 .percent{
     color:#B0BEC5;
 }
+.windy{
+    color:#B0BEC5;
+}
 @media(width<=512px) and (width>= 319px) {
 .hourContainer{
   font-size: 12px;
